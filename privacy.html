@@ -29,9 +29,17 @@
 
 <h2>2. How your data is stored</h2>
 <ul>
-  <li><strong>Without signing in:</strong> everything stays <strong>locally on your device</strong> (browser storage). Nothing leaves your computer.</li>
-  <li><strong>If you sign in:</strong> your content is synced to a private, per-user area of our Google Firebase (Firestore + Cloud Storage) backend so you can access it on other devices. Each user can only access their own data.</li>
-  <li><strong>Sharing:</strong> if you explicitly send a share request and the other person approves it, the two of you can view each other's shared highlights, screenshots, files, and recordings. Sharing never happens automatically and can be limited to people you connect with.</li>
+  <li><strong>Without signing in:</strong> the content you create (highlights, notes, screenshots, recordings, files) is stored <strong>only in your browser's local storage on your device</strong>. We do <strong>not</strong> upload it to our servers.</li>
+  <li><strong>If you sign in:</strong> your content is synced to a private, per-user area of our Google Firebase (Firestore + Cloud Storage) backend so you can access it on other devices. Each user can only access their own data. Screenshots, screen recordings, and uploaded files are stored in Firebase Cloud Storage; highlights, notes, and metadata in Firestore.</li>
+  <li><strong>Sharing:</strong> if you explicitly send a share request and the other person approves it, the two of you can view each other's shared highlights, screenshots, files, and recordings. Sharing never happens automatically and is limited to people you connect with.</li>
+</ul>
+
+<h2>2a. Network activity (even without signing in)</h2>
+<p>To provide certain features, the extension makes a few network requests regardless of whether you are signed in. These do <strong>not</strong> upload your saved content to our servers:</p>
+<ul>
+  <li><strong>Site icons:</strong> we fetch favicons from Google's public favicon service to display next to your highlights (this sends only the website's domain).</li>
+  <li><strong>On-device AI models:</strong> OCR (Tesseract) and transcription (Whisper) download their model files once from public CDNs (jsDelivr / Hugging Face) and then run <strong>entirely on your device</strong> — your images and audio are processed locally and are not sent to those services.</li>
+  <li><strong>Voice-to-text ("Speak" buttons):</strong> the live voice input uses your browser's built-in Web Speech API. In Chrome and Edge this means the audio is sent to the browser vendor's (Google's) speech-recognition service to convert it to text. Use typing instead if you prefer not to send audio.</li>
 </ul>
 
 <h2>3. How we use your data</h2>
@@ -49,7 +57,12 @@
 <p>You can delete any item at any time from within the extension. Deleting an item removes it from your device and, if synced, from the cloud. To remove all cloud data, delete your items or contact us to request account-data deletion.</p>
 
 <h2>6. Third-party services</h2>
-<p>We use Google Firebase (Authentication, Firestore, Cloud Storage) to provide sign-in and sync. Their handling of data is governed by the <a href="https://firebase.google.com/support/privacy">Google/Firebase Privacy Policy</a>.</p>
+<ul>
+  <li><strong>Google Firebase</strong> (Authentication, Firestore, Cloud Storage) — sign-in and optional cloud sync. Governed by the <a href="https://firebase.google.com/support/privacy">Google/Firebase Privacy Policy</a>.</li>
+  <li><strong>Google favicon service</strong> — to display site icons (receives website domains only).</li>
+  <li><strong>jsDelivr / Hugging Face CDNs</strong> — one-time download of on-device AI model files; no user content is sent to them.</li>
+  <li><strong>Browser Web Speech API</strong> — voice-to-text; audio is processed by your browser vendor's speech service (e.g., Google in Chrome/Edge).</li>
+</ul>
 
 <h2>7. Children</h2>
 <p>vNotes is not directed to children under 13 and does not knowingly collect their data.</p>
